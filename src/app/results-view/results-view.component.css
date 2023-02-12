@@ -1,0 +1,67 @@
+section{
+  display: flex;
+  flex-flow: row wrap;
+  width: 90vw;
+  justify-content: space-evenly;
+  margin-top: 15px;
+}
+
+.gifFrame{
+  position: relative;
+  padding: 0.6rem;
+
+}
+
+.gifAlternative{
+  color: rgb(181, 181, 181);
+
+  font-size: 14px;
+  position: absolute;
+  top: 30px;
+  left: 20px;
+  width: 50%;
+  z-index: 0;
+}
+
+.gifBox{
+  border: 1px solid rgb(187, 187, 187);
+  position:relative;
+  transition: all 0.4s;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+.gifHover{
+  width : 100%;
+  height: 100%;
+  transition: all 0.4s;
+  visibility: hidden;
+  padding: 10%;
+  color: transparent;
+  font-size: 16px;
+
+}
+
+.gifHover div{
+  color:#00061a;
+}
+
+.gifBox:hover{
+  transform:scale(1.2,1.2);
+}
+
+.gifBox:hover .gifHover{
+
+  visibility: visible;
+  background-color: rgba(205, 205, 205, 0.679);
+}
+
+.gifBox .cta{
+  position: absolute;
+  font-size: 0.9rem;
+  font-weight: bolder;
+  bottom: 25px;
+  color: rgb(167, 45, 1);
+}
+

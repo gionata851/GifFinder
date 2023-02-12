@@ -1,0 +1,36 @@
+main{
+  padding: 40px;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 30px;
+}
+.dataArea{
+  position : relative;
+  padding: 50px;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.user{
+  display: flex;
+  align-items: center;
+
+}
+
+.user img{
+  margin-left : 10px;
+}
+
+.trending{
+  color: green;
+  text-align: center;
+
+  width: 100px;
+  border: 1px solid green;
+  border-radius: 15px;
+  position: absolute;
+  top : -30px;
+
+}
+
+

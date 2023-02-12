@@ -1,0 +1,10 @@
+
+<nav>
+  <span>search: </span>
+  <input type="text" [(ngModel)]="searchKeyword">
+  <button mat-button (click)="launchSearch()"> Go! </button>
+  <button mat-button *ngIf="gifs !== undefined" (click)="orderByUplTime()"> sort by date </button>
+  <button mat-button (click)="getFavorites()"> favorites </button>
+
+</nav>
+<app-results-view [gifs]="gifs"></app-results-view>

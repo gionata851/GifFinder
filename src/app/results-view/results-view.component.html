@@ -1,0 +1,34 @@
+
+<!-- quando gifs è undefined non si deve vedere nulla -->
+<div *ngIf="gifs === undefined" ></div>
+
+<!-- quando gifs non è undefined ma è lungo 0, deve comparire il messaggio -->
+<div *ngIf="gifs !== undefined && gifs.length === 0">No gifs found</div>
+
+<!-- infine, quando non è undefined e contiene gifs, subentra la section, ovvero la flexbox che contiene le gif trovate -->
+<section *ngIf="gifs !== undefined && gifs.length !== 0">
+
+  <!-- per ogni gif abbiamo una gifFrame, una gifBox e una gifHover, una dentro l'altra -->
+  <!-- la gifframe serve a contenere anche la scritta nell'attesa che la gif si carichi -->
+  <div class="gifFrame"  *ngFor="let gif of gifs" >
+    <!-- la gifbox mostra l'immagine attraverso la proprietà background image -->
+    <span class="gifBox"
+
+      [style.backgroundImage]="'url('+(gif.images.fixed_height.url)+')'"
+      [style.height]="200+'px'"
+      [style.width]="gif.images.fixed_height.width+'px'"
+      attr.aria-label="{{gif.alt_text}}"
+      >
+      <!-- infine la gifhover serve a realizzare gli effetti hover -->
+      <div class="gifHover" routerLink="/detail/{{gif.id}}">
+        <div>{{gif.title}}</div>
+        <div class="cta">click for details!</div>
+      </div>
+
+    </span>
+
+    <!-- il testo di attesa se l'immagine non si carica subito -->
+    <span class="gifAlternative">{{gif.title}}</span>
+
+  </div>
+</section>
