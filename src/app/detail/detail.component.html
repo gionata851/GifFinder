@@ -1,4 +1,8 @@
-<div><button mat-button routerLink="/">back</button></div>
+
+<!-- il back button non usa più il router link ma lancia la funzione -->
+<!-- routerLink="/" -->
+
+<div><button mat-button (click)="emitBack()">back</button></div>
 
 <main>
   <div class="gifArea">
@@ -25,8 +29,8 @@
 
     <div class="trending" *ngIf="isTrending" > Trending! &#10003; </div>
 
-    <button class="notFav" *ngIf="!isFavorite" mat-button (click)="sendToFavs()">Add to Favourites &#10084; </button>
-    <button class="isFav" *ngIf="isFavorite" mat-button color="warn" >Favourite! &#10084; </button>
+    <!-- <button class="notFav" *ngIf="!isFavorite" mat-button (click)="sendToFavs()">Add to Favourites &#10084; </button>
+    <button class="isFav" *ngIf="isFavorite" mat-button color="warn" >Favourite! &#10084; </button> -->
   </div>
 </main>
 

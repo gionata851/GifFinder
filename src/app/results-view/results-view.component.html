@@ -6,29 +6,38 @@
 <div *ngIf="gifs !== undefined && gifs.length === 0">No gifs found</div>
 
 <!-- infine, quando non è undefined e contiene gifs, subentra la section, ovvero la flexbox che contiene le gif trovate -->
-<section *ngIf="gifs !== undefined && gifs.length !== 0">
+<div *ngIf="gifs !== undefined && gifs.length !== 0">
+  <!-- gif container per implementare il discorso del detail. Se detail è a false faccio vedere la gifcontainer, altrimenti faccio vedere il detail -->
+  <section class="gifContainer" *ngIf="!detailMode">
+    <!-- per ogni gif abbiamo una gifFrame, una gifBox e una gifHover, una dentro l'altra -->
+    <!-- la gifframe serve a contenere anche la scritta nell'attesa che la gif si carichi -->
+    <div class="gifFrame"  *ngFor="let gif of gifs" >
+      <!-- la gifbox mostra l'immagine attraverso la proprietà background image -->
+      <span class="gifBox"
 
-  <!-- per ogni gif abbiamo una gifFrame, una gifBox e una gifHover, una dentro l'altra -->
-  <!-- la gifframe serve a contenere anche la scritta nell'attesa che la gif si carichi -->
-  <div class="gifFrame"  *ngFor="let gif of gifs" >
-    <!-- la gifbox mostra l'immagine attraverso la proprietà background image -->
-    <span class="gifBox"
+        [style.backgroundImage]="'url('+(gif.images.fixed_height.url)+')'"
+        [style.height]="200+'px'"
+        [style.width]="gif.images.fixed_height.width+'px'"
+        attr.aria-label="{{gif.alt_text}}"
+        >
+        <!-- infine la gifhover serve a realizzare gli effetti hover -->
+        <!-- prima la gifHover aveva il router link, adesso provo a fare diversamente con una funzione che trasmette il tutto a il componente detail che diventa un figlio di questo -->
+        <!-- routerLink="/detail/{{gif.id}}" -->
+        <div class="gifHover" (click)="showDetail(gif)">
+          <div>{{gif.title}}</div>
+          <div class="cta">click for details!</div>
+        </div>
 
-      [style.backgroundImage]="'url('+(gif.images.fixed_height.url)+')'"
-      [style.height]="200+'px'"
-      [style.width]="gif.images.fixed_height.width+'px'"
-      attr.aria-label="{{gif.alt_text}}"
-      >
-      <!-- infine la gifhover serve a realizzare gli effetti hover -->
-      <div class="gifHover" routerLink="/detail/{{gif.id}}">
-        <div>{{gif.title}}</div>
-        <div class="cta">click for details!</div>
-      </div>
+      </span>
 
-    </span>
+      <!-- il testo di attesa se l'immagine non si carica subito -->
+      <span class="gifAlternative">{{gif.title}}</span>
 
-    <!-- il testo di attesa se l'immagine non si carica subito -->
-    <span class="gifAlternative">{{gif.title}}</span>
+    </div>
+  </section>
+  <div class="gifDetail" *ngIf="detailMode">
+
+    <app-detail [selectedGif]="gifToPass" (listModeEvent)="toListMode()" ></app-detail>
 
   </div>
-</section>
+</div>

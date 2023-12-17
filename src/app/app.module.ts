@@ -32,3 +32,4 @@ import { detailComponent } from './detail/detail.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

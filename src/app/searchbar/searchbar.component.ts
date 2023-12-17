@@ -1,6 +1,6 @@
-import { Component,  OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { QueryService } from '../query.service';
-import { payload, gif } from '../utilities/interfaces';
+import { Payload, gif, keyEvent } from '../utilities/interfaces';
 
 @Component({
   selector: 'app-searchbar',
@@ -9,54 +9,57 @@ import { payload, gif } from '../utilities/interfaces';
 })
 export class SearchbarComponent implements OnInit {
 
-  queryResult : payload | undefined;
-  gifs : gif[] | undefined;
-  searchKeyword : string = '';
+  queryResult: Payload | undefined;
+  gifs: gif[] | undefined;
+  searchKeyword: string = '';
+
+  //l'idea è di far prendere alla results vie questo evento per partire con la ricerca
+  @Output() emettiSegnaleLancio = new EventEmitter();
 
 
-
-  constructor(private qs : QueryService){ }
+  constructor(private qs: QueryService) { }
 
   ngOnInit(): void {
-    //se il servizio ha già gifs ricarico quelle,
-    //quindi per prima cosa mi iscrivo agli eventi che mi fanno avere le gifs
-    this.qs.sendingGifs.subscribe((receivedGifs : gif[]) => {
-      console.log('gifs ricevute dal servizio');
-      this.gifs = receivedGifs;
-    });
-    this.qs.sendingKeyword.subscribe((receivedKeyword : string) =>{
-      this.searchKeyword = receivedKeyword;
+
+    document.addEventListener('keypress', (e: keyEvent) => {
+      if (e.key == 'Enter') {
+        this.launchSearchEvent();
+      }
     });
 
-    //poi chiedo se ci sono gifs
-    this.qs.askForGifs.emit(false);
 
   }
 
-  launchSearch(){
-    scroll(0,0);
-    this.qs.search(this.searchKeyword).subscribe( (result : payload) => {
-      this.queryResult = result;
-      if(this.queryResult.data) this.gifs=this.queryResult.data;
-      this.qs.insertquery.emit(this.gifs);
-    });
+  //il pulsante "Go!" lancia questa funzione
+  launchSearchEvent() {
+    console.log('launchsearchevent emessa');
+    this.emettiSegnaleLancio.emit();
   }
 
-  orderByUplTime(){
-    this.qs.receivedUplTime.emit(false);
-  }
+  //funzione per far fare la search al componente results view
 
-  getFavorites(){
+
+
+
+
+
+
+}
+
+
+/*cose obsolete{
+ /*   orderByUplTime() {
+      this.qs.receivedUplTime.emit(false);
+    } */
+
+/*   getFavorites() {
     this.qs.sendingFavs.emit(false);
-  }
+  } */
 
 /*   orderByRating(){
     console.log('order della searchbar partito');
     this.qs.receivedRating.emit(false);
   }
   //iniziato ma poi mi sono accorto che i rating non sono proprio in ordine alfabetico
-  */
 
-
-
-}
+}*/
