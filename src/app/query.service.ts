@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { Ipayload } from './utilities/interfaces'
 import { APIKEY } from 'src/assets/keys';
 
-//questo servizio si occupa dell'interrogazione della API e della comunicazione delle gif tra componenti
+//questo servizio si occupa dell'interrogazione della API
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class QueryService {
 
   //metodo search per eseguire la chiamata alla API.
   search(keyword: string): Observable<Ipayload> {
-    let result: Observable<Ipayload> = this.http.get<Ipayload>(`http://api.giphy.com/v1/gifs/search?q=${keyword}&api_key=${this.myApiKey}&limit=20`);
+    let result: Observable<Ipayload> = this.http.get<Ipayload>(`https://api.giphy.com/v1/gifs/search?q=${keyword}&api_key=${this.myApiKey}&limit=20`);
     //mi ricordo della keyword
     this.storedKeyword = keyword;
     //e metto a 4 il contatore
@@ -41,7 +41,7 @@ export class QueryService {
   addToResearh(): Observable<Ipayload> {
     let result: Observable<Ipayload>;
     if (this.storedKeyword !== '') {
-      result = this.http.get<Ipayload>(`http://api.giphy.com/v1/gifs/search?q=${this.storedKeyword}&api_key=${this.myApiKey}&offset=${5 * this.n}&limit=5`);
+      result = this.http.get<Ipayload>(`https://api.giphy.com/v1/gifs/search?q=${this.storedKeyword}&api_key=${this.myApiKey}&offset=${5 * this.n}&limit=5`);
       this.n++;
     }
     else {
