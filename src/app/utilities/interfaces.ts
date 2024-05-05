@@ -1,8 +1,8 @@
 //file con le interface utili al progetto
 
 //l'interfaccia Payload rappresenta la risposta del server
-export interface Payload {
-  data: gif[],
+export interface Ipayload {
+  data: Igif[],
   meta: {
     status: number,
     msg: string
@@ -10,7 +10,7 @@ export interface Payload {
 }
 
 //l'interfaccia gif rappresenta l'oggetto gif contenuto nel Payload
-export interface gif {
+export interface Igif {
   id: string,
   url: string,
   embed_url: string,
@@ -24,7 +24,18 @@ export interface gif {
   images: {
     fixed_height: {
       url: string, //da usare questo come url nel markup, altrimenti si ha errore CORB
-      width: string
+      width: string,
+      mp4: string
+    },
+    fixed_height_small: {
+      url: string,
+      width: string,
+      mp4: string
+    },
+    downsized: {
+      url: string,
+      width: string,
+      height: string
     },
     original: {
       url: string,
@@ -37,10 +48,11 @@ export interface gif {
 
   user: {
     display_name: string,
-    avatar_url: string
+    avatar_url: string,
+    profile_url: string
   }
 }
 
-export interface keyEvent {
+export interface IkeyEvent {
   key: string
 }

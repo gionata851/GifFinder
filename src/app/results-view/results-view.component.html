@@ -15,7 +15,7 @@
       <!-- la gifbox mostra l'immagine attraverso la proprietà background image -->
       <span class="gifBox"
 
-        [style.backgroundImage]="'url('+(gif.images.fixed_height.url)+')'"
+        [style.backgroundImage]="'url('+(gif.images.downsized.url)+')'"
         [style.height]="200+'px'"
         [style.width]="gif.images.fixed_height.width+'px'"
         attr.aria-label="{{gif.alt_text}}"
@@ -35,9 +35,11 @@
 
     </div>
   </section>
+
+  <!-- ecco il div gif-detailc he ospita il componente detail, che si vede solo se detailMode è true -->
+  <!-- contrariamente alla gif container che si vede solo se detailMode è false -->
   <div class="gifDetail" *ngIf="detailMode">
-
     <app-detail [selectedGif]="gifToPass" (listModeEvent)="toListMode()" ></app-detail>
-
   </div>
+
 </div>

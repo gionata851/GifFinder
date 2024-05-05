@@ -3,35 +3,41 @@
 <!-- routerLink="/" -->
 
 <div><button mat-button (click)="emitBack()">back</button></div>
-
-<main>
-  <div class="gifArea">
-    <img src="{{selectedGif?.images?.original?.url}}" alt="{{selectedGif?.alt_text}}" [ngStyle]="ngStyleObject">
-  </div>
-  <div class="dataArea">
-
-    <h3>title: {{selectedGif?.title}}</h3>
-
-    <div class="user" *ngIf="selectedGif?.user?.display_name && selectedGif?.user?.display_name !== ''" >
-      <span >by: {{selectedGif?.user?.display_name}}</span>
-      <img src="{{selectedGif?.user?.avatar_url}}" alt="{{selectedGif?.user?.display_name}}" height="30px" width="30px">
+<div class="container">
+  <header><h3>title: {{selectedGif?.title}}</h3></header>
+  <main>
+    <div class="gifArea">
+      <img src="{{selectedGif?.images?.original?.webp}}" alt="{{selectedGif?.alt_text}}" [ngStyle]="ngStyleObject">
     </div>
+    <div class="dataArea">
 
-    <span>rating: "{{selectedGif?.rating}}"</span>
+      <div class="user" *ngIf="selectedGif?.user?.display_name && selectedGif?.user?.display_name !== ''" >
+        <span >by: {{selectedGif?.user?.display_name}}</span>
+        <img src="{{selectedGif?.user?.avatar_url}}" alt="{{selectedGif?.user?.display_name}}" height="130px" width="130px">
+        <button mat-button (click)="openInNewTab(selectedGif?.user?.profile_url)">visit<br>profile</button>
+      </div>
 
-    <span>width: {{selectedGif?.images?.original?.width}} px</span>
-    <span>height: {{selectedGif?.images?.original?.height}} px</span>
-    <span *ngIf="selectedGif?.source_tld && selectedGif?.source_tld !== ''">source: {{selectedGif?.source_tld}}</span>
+      <span >rating: <em>{{selectedGif?.rating}}</em></span>
 
-    <span>GIPHY url: {{selectedGif?.url}}</span>
-    <span>url for embedding: {{selectedGif?.embed_url}}</span>
+      <span>width: {{selectedGif?.images?.original?.width}} px</span>
+      <span>height: {{selectedGif?.images?.original?.height}} px</span>
+      <span *ngIf="selectedGif?.source_tld && selectedGif?.source_tld !== ''">source: {{selectedGif?.source_tld}}</span>
+
+      <!-- div container per far apparire il pulsante a destra invece che a capo -->
+      <div>
+        <span>GIPHY url: {{selectedGif?.url}}</span> <button mat-button (click)="openInNewTab(selectedGif?.url)">visit</button>
+      </div>
+      <div>
+        <span>url for embedding: {{selectedGif?.embed_url}}</span> <button mat-button (click)="copyToClipboard(selectedGif?.embed_url)">copy</button>
+      </div>
 
 
-    <div class="trending" *ngIf="isTrending" > Trending! &#10003; </div>
+      <div class="trending" *ngIf="isTrending" > Trending! &#10003; </div>
 
-    <!-- <button class="notFav" *ngIf="!isFavorite" mat-button (click)="sendToFavs()">Add to Favourites &#10084; </button>
-    <button class="isFav" *ngIf="isFavorite" mat-button color="warn" >Favourite! &#10084; </button> -->
-  </div>
-</main>
+      <!-- <button class="notFav" *ngIf="!isFavorite" mat-button (click)="sendToFavs()">Add to Favourites &#10084; </button>
+      <button class="isFav" *ngIf="isFavorite" mat-button color="warn" >Favourite! &#10084; </button> -->
+    </div>
+  </main>
+</div>
 
 

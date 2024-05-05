@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { QueryService } from '../query.service';
-import { gif } from '../utilities/interfaces';
+import { Igif } from '../utilities/interfaces';
+
 
 @Component({
   selector: 'app-detail',
@@ -9,18 +8,20 @@ import { gif } from '../utilities/interfaces';
   styleUrls: ['./detail.component.css']
 })
 
+//la classe implementa onchanges per tracciare il fatto che la selected gif è cambiata
 export class detailComponent implements OnChanges {
   //gif cliccata ricevuta dal componente lista
-  @Input() selectedGif: gif | undefined;
+  @Input() selectedGif: Igif | undefined;
   //oggetto con cui valorizziamo l'ngStyle della gif
   ngStyleObject: Object | undefined;
   //tranding e favorite
   isTrending: boolean;
   isFavorite: boolean;
 
+
   @Output() listModeEvent = new EventEmitter();
 
-  constructor(private ar: ActivatedRoute, private qs: QueryService) {
+  constructor() {
     this.selectedGif = undefined;
     this.ngStyleObject = undefined;
     this.isTrending = false;
@@ -44,9 +45,21 @@ export class detailComponent implements OnChanges {
     this.listModeEvent.emit();
   }
 
+  openInNewTab(urlToOpen?: string) {
+    urlToOpen ? window.open(urlToOpen, "_blank") : "";
+  }
+
+  copyToClipboard(textToCopy?: string) {
+    if (textToCopy) {
+      navigator.clipboard.writeText(textToCopy);
+      alert("copied!");
+    }
+
+  }
+
 }
 
-/*
+/*cose obsolete o sospese
 {
          /*     this.qs.sendingIsFav.subscribe((b: boolean) => {
           this.isFavorite = true;

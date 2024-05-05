@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { QueryService } from '../query.service';
-import { Payload, gif, keyEvent } from '../utilities/interfaces';
+import { Ipayload, Igif, IkeyEvent } from '../utilities/interfaces';
 
 @Component({
   selector: 'app-searchbar',
@@ -9,45 +9,34 @@ import { Payload, gif, keyEvent } from '../utilities/interfaces';
 })
 export class SearchbarComponent implements OnInit {
 
-  queryResult: Payload | undefined;
-  gifs: gif[] | undefined;
+  queryResult: Ipayload | undefined;
+  gifs: Igif[] | undefined;
   searchKeyword: string = '';
 
-  //l'idea è di far prendere alla results vie questo evento per partire con la ricerca
+  //l'idea è di far prendere alla results view questo evento per partire con la ricerca
   @Output() emettiSegnaleLancio = new EventEmitter();
 
-
-  constructor(private qs: QueryService) { }
+  constructor() { }
 
   ngOnInit(): void {
 
-    document.addEventListener('keypress', (e: keyEvent) => {
+    //nella init poniamo l'event listener per far funzionare l'invio (che fa la stessa cosa del pulsante Go!)
+    document.addEventListener('keypress', (e: IkeyEvent) => {
       if (e.key == 'Enter') {
         this.launchSearchEvent();
       }
     });
-
-
   }
 
-  //il pulsante "Go!" lancia questa funzione
+  //il pulsante "Go!" (o l'invio) lancia questa funzione
   launchSearchEvent() {
-    console.log('launchsearchevent emessa');
     this.emettiSegnaleLancio.emit();
   }
-
-  //funzione per far fare la search al componente results view
-
-
-
-
-
-
 
 }
 
 
-/*cose obsolete{
+/*cose obsolete/sospese{
  /*   orderByUplTime() {
       this.qs.receivedUplTime.emit(false);
     } */

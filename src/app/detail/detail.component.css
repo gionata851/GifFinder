@@ -1,3 +1,9 @@
+div.container{
+  width: fit-content;
+}
+header{
+  text-align: center;
+}
 main{
   padding: 40px;
   display: flex;
@@ -6,15 +12,20 @@ main{
 }
 .dataArea{
   position : relative;
-  padding: 50px;
+  padding: 20px;
   display: flex;
   flex-flow: column nowrap;
+}
+
+.dataArea button{
+  display: inline-block;
+  margin-left: 5px;
 }
 
 .user{
   display: flex;
   align-items: center;
-
+  justify-content: right;
 }
 
 .user img{

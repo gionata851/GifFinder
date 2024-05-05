@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { QueryService } from '../query.service';
-import { gif, Payload } from '../utilities/interfaces';
+import { Igif, Ipayload } from '../utilities/interfaces';
 import { getLocaleFirstDayOfWeek } from '@angular/common';
 
 
@@ -16,15 +16,15 @@ export class ResultsViewComponent implements OnInit {
   //parola di ricerca passata dal componebnte searchbar
   @Input() searchKeyword: string;
   //le gif ottenute con le api
-  gifs: gif[] | undefined;
+  gifs: Igif[] | undefined;
   //l'evenntuale gif cliccata di cui vedere il dettaglio
-  gifToPass: gif | undefined;
+  gifToPass: Igif | undefined;
   //la posizione Y al momento del clic, da ripristinare quando si torna in lista
   scrollYMemory: number;
   //booleano per definire se siamo in dettaglio, inizialmente a false (siamo in lista)
   detailMode: boolean;
   //il result della chiamata alla api
-  queryResult: Payload | undefined;
+  queryResult: Ipayload | undefined;
 
   constructor(private qs: QueryService) {
     this.scrollYMemory = 0;
@@ -35,7 +35,7 @@ export class ResultsViewComponent implements OnInit {
   }
 
   //metodo per passare al dettaglio
-  showDetail(clickedGif: gif) {
+  showDetail(clickedGif: Igif) {
     //mi ricordo la posizione Y
     this.scrollYMemory = scrollY;
     //valorizzo la gif, che verrà trasmessa al componente di dettaglio, nel template
@@ -56,8 +56,9 @@ export class ResultsViewComponent implements OnInit {
   }
 
   launchSearch() {
+    this.detailMode = false;
     scroll(0, 0);
-    this.qs.search(this.searchKeyword).subscribe((result: Payload) => {
+    this.qs.search(this.searchKeyword).subscribe((result: Ipayload) => {
       /*       console.log('Payload:');
             console.log(result); */
       this.queryResult = result;
@@ -82,7 +83,7 @@ export class ResultsViewComponent implements OnInit {
         if (scrollY + innerHeight + 100 >= document.documentElement.scrollHeight) {
 
           //lanciamo la nuova query di ricerca per aggiungere gifs
-          this.qs.addToResearh().subscribe((result: Payload) => {
+          this.qs.addToResearh().subscribe((result: Ipayload) => {
 
             if (result.data && result.data.length > 0) {
               this.gifs = this.gifs?.concat(result.data);
